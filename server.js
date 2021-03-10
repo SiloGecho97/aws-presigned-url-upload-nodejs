@@ -17,7 +17,7 @@ let s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const signFile = (filePath) => {
     return new Promise((resolve, reject) => {
         const params = {
-            Bucket: "talguu-vout1",
+            Bucket: "your_packet",
             Fields: {
                 key: filePath.split(".")[0],
             },
