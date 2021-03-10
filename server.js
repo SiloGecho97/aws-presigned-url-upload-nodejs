@@ -4,16 +4,15 @@ const request = require("request");
 const axios = require("axios");
 
 var AWS = require("aws-sdk");
-var credentials = new AWS.SharedIniFileCredentials({ profile: "liguam" });
+var credentials = new AWS.SharedIniFileCredentials({ profile: "<Your-Profile>" });
 AWS.config.credentials = credentials;
 
-AWS.config.update({ region: "us-west-2" });
+AWS.config.update({ region: "<region>" });
 
 // Create S3 service object
 let s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
-//let s3;
-
+//let sing file with aws authentication
 const signFile = (filePath) => {
     return new Promise((resolve, reject) => {
         const params = {
@@ -27,15 +26,18 @@ const signFile = (filePath) => {
                 { acl: "public-read" },
             ],
         };
+        //create presigned post URL
         s3.createPresignedPost(params, (err, data) => {
             resolve(data);
         });
     });
 };
-
+/**
+ * Send File to
+ * @param {*} filePath 
+ * @param {*} payload 
+ */
 const sendFile = (filePath, payload) => {
-    console.log(payload);
-    const fetch = require("node-fetch");
     const FormData = require("form-data");
 
     const form = new FormData();
