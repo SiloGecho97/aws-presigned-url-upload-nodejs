@@ -42,17 +42,19 @@ const sendFile = (filePath, payload) => {
 
     const form = new FormData();
     form.append("acl", "public-read");
+    //append the fields to formData
     for (const field in payload.fields) {
         form.append(field, payload.fields[field]);
     }
+    //read the file and append to formData
     form.append("file", fs.createReadStream(__dirname + `/${filePath}`));
 
-
+    //get Legth of formData
     form.getLength((err, length) => {
 
         if (err) console.log(err);
 
-
+        //send to presigned URL.
         axios({
             method: "POST",
             url: payload.url,
@@ -74,6 +76,7 @@ const sendFile = (filePath, payload) => {
     });
 };
 
+//make sure file located in this directory
 const file = "vout-axios.txt";
 const filePath = `${file}`;
 signFile(filePath).then((payload) => {
